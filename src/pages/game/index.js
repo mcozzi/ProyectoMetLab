@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import QuestionCard from "../../components/QuestionCard"
+import Button from "../../components/Button";
+import Result from "../../components/Result";
 
 const API_URL = "https://62bb6e36573ca8f83298fbef.mockapi.io/metcampweb22/v1/questions/harry-potter";
 
 function Game() {
     const [ loading, setLoading ] = useState(true);
     const [ questions, setQuestions ] = useState([]);
+    const [selectedAnswers, setSelectedAnswers] = useState([]);
+    const [result, setResult] = useState(0);
+    const [mostrarResultado, setMostrarResultado] = useState(false);
+
+    function calcularResultado() {
+        const respuestasCorrectas = selectedAnswers.filter((respuesta) => respuesta.valorOpcion === true)
+        setResult(respuestasCorrectas.length)
+        setMostrarResultado(true)
+    }
 
     useEffect(() => {
         fetch(API_URL)
@@ -43,13 +54,29 @@ function Game() {
                         <form>
                             {
                                 questions.map((pregunta) => {
-                                    return <QuestionCard key={pregunta.id} preguntaActual={pregunta} />
+                                    return <QuestionCard key={pregunta.id} preguntaActual={pregunta} selectedAnswers={selectedAnswers}
+                                    setSelectedAnswers={setSelectedAnswers}
+                                    mostrarResultado={mostrarResultado}/>
                                 })
                             }
                         </form>
                     )
                 }
-                <h1>El juego</h1>
+                <div className="level">
+                    <div className="level-left">
+                        {
+                            mostrarResultado &&
+                            <Result valorResultado={result} />
+                        }
+                    </div>
+                    <div className="level-right">
+                        <Button
+                            disabled={selectedAnswers.length !== questions.length || mostrarResultado}
+                            onClick={() => calcularResultado()}
+                            text="Validar" />
+
+                    </div>
+                </div>
             </section>
         </div>
     )
