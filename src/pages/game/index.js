@@ -32,6 +32,12 @@ function Game() {
         .finally(() => setLoading(false))
     }, [])
 
+    function reset(){
+        setMostrarResultado(false)
+        setSelectedAnswers([])
+        setResult(0)
+         }
+
     return (
         <div className="container">
             <section className="section">
@@ -70,12 +76,19 @@ function Game() {
                         }
                     </div>
                     <div className="level-right">
+                        <div className="level-item">
                         <Button
                             disabled={selectedAnswers.length !== questions.length || mostrarResultado}
                             onClick={() => calcularResultado()}
                             text="Validar" />
-
+                        </div>
+                        <div className="level-item">
+                        <Button
+                            onClick={() => reset()}
+                            text="Reset" />
+                        </div>
                     </div>
+                    
                 </div>
             </section>
         </div>

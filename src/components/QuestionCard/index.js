@@ -9,19 +9,21 @@ function QuestionCard({ preguntaActual, selectedAnswers, setSelectedAnswers, mos
             valorOpcion
         }
         ])
+        console.log(otrasRespuestas)
+        console.log(selectedAnswers)
     }
 
-    function mostrarColores(valor) {
-        let valorClase = "";
-        if (mostrarResultado) {
-            if (valor === true) {
-                valorClase = "has-text-primary";
-            } else {
-                valorClase = "has-text-danger"
-            }
-        }
-        return valorClase;
-    }
+    // function mostrarColores(valor) {
+    //     let valorClase = "";
+    //     if (mostrarResultado) {
+    //         if (valor === true) {
+    //             valorClase = "has-text-primary";
+    //         } else {
+    //             valorClase = "has-text-danger"
+    //         }
+    //     }
+    //     return valorClase;
+    // }
 
 
     return (
@@ -35,7 +37,7 @@ function QuestionCard({ preguntaActual, selectedAnswers, setSelectedAnswers, mos
                     <div key={opcion.id} onChange={() => seleccionarRespuesta(preguntaActual.id, opcion.is_correct)}>
                         <input type="radio" id={`${preguntaActual.id}`} name={preguntaActual.id} value={opcion.answer} ></input>
                         <label htmlFor={`${preguntaActual.id}`}
-                            className={mostrarColores(opcion.is_correct)}
+                            // className={mostrarColores(opcion.is_correct)}
                         >&nbsp;{opcion.answer}</label>
                     </div>
                 ))
